@@ -61,6 +61,6 @@ to build the functionality in your custom models.
 
 [pre_init]: https://docs.djangoproject.com/en/dev/ref/signals/#pre-init
 [post_init]: https://docs.djangoproject.com/en/dev/ref/signals/#post-init
-[harder to maintain]: https://docs.djangoproject.com/en/dev/ref/signals/#post-init:~:text=Warning-,Signals%20can%20make%20your%20code%20harder%20to%20maintain.,-Consider%20implementing%20a
+[hard to maintain]: https://docs.djangoproject.com/en/dev/ref/signals/#post-init:~:text=Warning-,Signals%20can%20make%20your%20code%20harder%20to%20maintain.,-Consider%20implementing%20a
 [overridden]: https://docs.djangoproject.com/en/dev/ref/signals/#post-init:~:text=Many%20of%20these,to%20be%20sent.
 [iter]: https://docs.djangoproject.com/en/dev/ref/models/querysets/#iterator
