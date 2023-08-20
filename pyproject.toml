@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "django-post-fetch-hook"
-version = "0.0.1"
+version = "0.0.2"
 description = "Modify data fetched from a database after it has been fetched but before it has been cached in django's result cache."
 authors = [
     "Matti Lamppu <lamppu.matti.akseli@gmail.com>",
