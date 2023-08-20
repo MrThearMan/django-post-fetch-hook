@@ -51,7 +51,12 @@ class PostFetchQuerySetMixin:
                 rows[i] = self.model.post_fetch_hook(row)
                 self._related_post_fetch(rows[i], select_related)
             else:
-                rows[i] = self.model.post_fetch_values_list_flat_hook(row, getattr(self, "_fields", (None,))[0])
+                field = getattr(self, "_fields", (None,))[0]
+                # Primary keys must be allowed so that 'bulk_create' works
+                if field == "pk":  # pragma: no cover
+                    rows[i] = row
+                    continue
+                rows[i] = self.model.post_fetch_values_list_flat_hook(row, field)
         return rows
 
     def _related_post_fetch(self, model: Model, select_related: NestedDict) -> None:
