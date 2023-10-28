@@ -10,11 +10,11 @@ __all__ = [
 ]
 
 
-class PostFetchQuerySet(PostFetchQuerySetMixin, QuerySet):
+class PostFetchQuerySet(PostFetchQuerySetMixin, QuerySet):  # type: ignore[misc]
     pass
 
 
-class PostFetchManager(BaseManager.from_queryset(PostFetchQuerySet)):
+class PostFetchManager(BaseManager.from_queryset(PostFetchQuerySet)):  # type: ignore[misc]
     pass
 
 
