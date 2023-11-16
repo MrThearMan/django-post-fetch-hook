@@ -45,7 +45,7 @@ class PostFetchQuerySetMixin:
 
     model: type["PostFetchModel"]
     query: Query
-    _result_cache: list[Any] | None
+    _result_cache: Optional[list[Any]]
     _prefetch_related_lookups: dict[str, Any]
     _iterable_class: type[BaseIterable]
     _prefetch_done: bool
@@ -77,7 +77,7 @@ class PostFetchQuerySetMixin:
                 rows[i] = self.model.post_fetch_hook(row)
                 self._related_post_fetch(rows[i], select_related)
             else:
-                field: str | None = getattr(self, "_fields", (None,))[0]
+                field: Optional[str] = getattr(self, "_fields", (None,))[0]
                 # Primary keys must be allowed so that 'bulk_create' works
                 if field == "pk":  # pragma: no cover
                     rows[i] = row
