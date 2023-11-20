@@ -67,22 +67,50 @@ class PostFetchQuerySetMixin:
             select_related = {field.name: {} for field in self.model._meta.fields if field.is_relation}
         return select_related
 
-    def _post_fetch(self, rows: list[Any], select_related: NestedDict) -> list[Any]:
+    def _post_fetch(self, rows: list[Any], select_related: NestedDict) -> list[Any]:  # noqa: C901, PLR0912
         for i, row in enumerate(rows):
             if isinstance(row, dict):
-                rows[i] = self.model.post_fetch_values_hook(row, getattr(self, "_fields", ()))
+                # Allow not defining 'post_fetch_values_hook' on model
+                try:
+                    method = self.model.post_fetch_values_hook
+                except AttributeError:  # pragma: no cover
+                    rows[i] = row
+                else:
+                    rows[i] = method(row, getattr(self, "_fields", ()))
+
             elif isinstance(row, tuple):
-                rows[i] = self.model.post_fetch_values_list_hook(row, getattr(self, "_fields", ()))
+                # Allow not defining 'post_fetch_values_list_hook' on model
+                try:
+                    method = self.model.post_fetch_values_list_hook
+                except AttributeError:  # pragma: no cover
+                    rows[i] = row
+                else:
+                    rows[i] = method(row, getattr(self, "_fields", ()))
+
             elif isinstance(row, Model):
-                rows[i] = self.model.post_fetch_hook(row)
+                # Allow not defining 'post_fetch_hook' on model
+                try:
+                    method = self.model.post_fetch_hook
+                except AttributeError:  # pragma: no cover
+                    rows[i] = row
+                else:
+                    rows[i] = method(row)
                 self._related_post_fetch(rows[i], select_related)
+
             else:
                 field: Optional[str] = getattr(self, "_fields", (None,))[0]
                 # Primary keys must be allowed so that 'bulk_create' works
                 if field == "pk":  # pragma: no cover
                     rows[i] = row
                     continue
-                rows[i] = self.model.post_fetch_values_list_flat_hook(row, field)
+
+                # Allow not defining 'post_fetch_values_list_flat_hook' on model
+                try:
+                    method = self.model.post_fetch_values_list_flat_hook
+                except AttributeError:  # pragma: no cover
+                    rows[i] = row
+                else:
+                    rows[i] = method(row, field)
         return rows
 
     def _related_post_fetch(self, model: Model, select_related: NestedDict) -> None:
