@@ -4,7 +4,7 @@ from django.db.models import Model
 from django.db.models.query import BaseIterable
 from django.db.models.sql import Query
 
-from .typing import Any, Callable, Optional
+from .typing import Any, Callable
 
 if TYPE_CHECKING:
     from .models import PostFetchModel
@@ -35,7 +35,7 @@ class PostFetchModelMixin:
         return values  # pragma: no cover
 
     @classmethod
-    def post_fetch_values_list_flat_hook(cls, value: Any, field: Optional[str]) -> Any:
+    def post_fetch_values_list_flat_hook(cls, value: Any, field: str | None) -> Any:
         """If model values are accessed with qs.values_list(flat=True)"""
         return value  # pragma: no cover
 
@@ -45,7 +45,7 @@ class PostFetchQuerySetMixin:
 
     model: type["PostFetchModel"]
     query: Query
-    _result_cache: Optional[list[Any]]
+    _result_cache: list[Any] | None
     _prefetch_related_lookups: dict[str, Any]
     _iterable_class: type[BaseIterable]
     _prefetch_done: bool
@@ -98,7 +98,7 @@ class PostFetchQuerySetMixin:
                 self._related_post_fetch(rows[i], select_related)
 
             else:
-                field: Optional[str] = getattr(self, "_fields", (None,))[0]
+                field: str | None = getattr(self, "_fields", (None,))[0]
                 # Primary keys must be allowed so that 'bulk_create' works
                 if field == "pk":  # pragma: no cover
                     rows[i] = row
@@ -115,7 +115,7 @@ class PostFetchQuerySetMixin:
 
     def _related_post_fetch(self, model: Model, select_related: NestedDict) -> None:
         for field, nested_select_related in select_related.items():
-            related_model: Optional[Model] = getattr(model, field, None)
+            related_model: Model | None = getattr(model, field, None)
             if related_model is None:  # null or invalid relations
                 continue
             related_model_post_fetch_hook = getattr(related_model, "post_fetch_hook", None)

@@ -1,17 +1,12 @@
-[tool.poetry]
+[project]
 name = "django-post-fetch-hook"
 version = "0.0.3"
 description = "Modify data fetched from a database after it has been fetched but before it has been cached in django's result cache."
 authors = [
-    "Matti Lamppu <lamppu.matti.akseli@gmail.com>",
-]
-packages = [
-    { include = "post_fetch_hook" },
+    { name = "Matti Lamppu", email = "lamppu.matti.akseli@gmail.com" },
 ]
 license = "MIT"
 readme = "README.md"
-homepage = "https://mrthearman.github.io/django-post-fetch-hook"
-repository = "https://github.com/MrThearMan/django-post-fetch-hook"
 keywords = [
     "django",
     "post",
@@ -35,38 +30,38 @@ classifiers = [
     "Framework :: Django :: 5.0",
     "Framework :: Django :: 5.1",
 ]
-include = [
-    "README.md",
-    "LICENSE",
-]
-exclude = [
-    "tests",
-]
+requires-python = ">=3.10,<4"
+dynamic = ["dependencies"]
 
-[tool.poetry.urls]
+[project.urls]
+"Homepage" = "https://mrthearman.github.io/django-post-fetch-hook"
+"Repository" = "https://github.com/MrThearMan/django-post-fetch-hook"
 "Bug Tracker" = "https://github.com/MrThearMan/django-post-fetch-hook/issues"
+"Documentation" = "https://mrthearman.github.io/django-post-fetch-hook"
+
+[tool.poetry]
+requires-poetry = ">=2.0.0"
+packages = [
+    { include = "post_fetch_hook" },
+]
 
 [tool.poetry.dependencies]
-python = ">=3.10,<4"
 Django = ">=4.2"
 
 [tool.poetry.group.test.dependencies]
-pytest = "8.3.4"
-coverage = "7.6.10"
+pytest = "8.3.3"
+coverage = "7.6.2"
 pytest-django = "4.9.0"
-tox = "4.23.2"
+tox = "4.21.2"
 tox-gh-actions = "3.2.0"
 
 [tool.poetry.group.docs.dependencies]
 mkdocs = "1.6.1"
-pymdown-extensions = "10.13"
-mkdocs-mermaid2-plugin = "1.2.1"
+pymdown-extensions = "10.11.2"
+mkdocs-mermaid2-plugin = "1.1.1"
 
 [tool.poetry.group.lint.dependencies]
-mypy = "1.14.1"
 pre-commit = "4.0.1"
-django-stubs = "5.1.1"
-djangorestframework-stubs = "3.15.2"
 
 [tool.ruff]
 fix = true
@@ -120,6 +115,7 @@ select = [
     "W",        # pycodestyle warnings
 ]
 ignore = [
+    "A005",     # Can shadow builtin modules.
     "ANN101",   # Missing type annotation for `self` in method
     "ANN102",   # Missing type annotation for `cls` in classmethod
     "ARG003",   # Missing type annotation for `cls` in classmethod
@@ -144,15 +140,6 @@ ignore = [
     "W191",     # tab-indentation
 ]
 
-[tool.mypy]
-python_version = "3.13"
-warn_return_any = "True"
-warn_unused_configs = "True"
-plugins = [
-    "mypy_django_plugin.main",
-    "mypy_drf_plugin.main",
-]
-
 [tool.django-stubs]
 django_settings_module = "tests.project.settings"
 
@@ -170,10 +157,11 @@ exclude_lines = [
     "if TYPE_CHECKING:",
     "except ImportError:",
     "pragma: no cover",
+    "pass",
 ]
 
 [tool.pytest.ini_options]
-addopts = "-vv -s --log-cli-level=INFO"
+addopts = "-vv -s --log-cli-level=INFO --disable-warnings"
 
 [tool.tox]
 legacy_tox_ini = """
