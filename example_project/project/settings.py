@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from pathlib import Path
 
 from django.core.management.utils import get_random_secret_key
@@ -7,8 +9,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 DEBUG = True
 SECRET_KEY = get_random_secret_key()
 
-ROOT_URLCONF = "tests.project.urls"
-WSGI_APPLICATION = "tests.project.wsgi.application"
+ROOT_URLCONF = "example_project.project.urls"
+WSGI_APPLICATION = "example_project.project.wsgi.application"
 
 ALLOWED_HOSTS = []
 
@@ -19,7 +21,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "tests.myapp",
+    "example_project.myapp",
 ]
 
 MIDDLEWARE = [

@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from django.db.models import Model, QuerySet
 from django.db.models.manager import BaseManager
 

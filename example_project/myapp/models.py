@@ -1,7 +1,13 @@
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
 from django.db import models
 
 from post_fetch_hook.models import PostFetchModel
-from post_fetch_hook.typing import Any
+
+if TYPE_CHECKING:
+    from post_fetch_hook.typing import Any
 
 
 class Parent(PostFetchModel):
@@ -9,7 +15,7 @@ class Parent(PostFetchModel):
     title = models.CharField(null=True, max_length=20)
 
     @classmethod
-    def post_fetch_hook(cls, model: "Parent") -> "Parent":
+    def post_fetch_hook(cls, model: Parent) -> Parent:
         model.title = None
         return model
 
@@ -19,7 +25,7 @@ class Object(PostFetchModel):
     identifier = models.IntegerField(null=True)
 
     @classmethod
-    def post_fetch_hook(cls, model: "Object") -> "Object":
+    def post_fetch_hook(cls, model: Object) -> Object:
         model.identifier = None
         return model
 
@@ -30,7 +36,7 @@ class Thing(PostFetchModel):
     email = models.EmailField(null=True)
 
     @classmethod
-    def post_fetch_hook(cls, model: "Thing") -> "Thing":
+    def post_fetch_hook(cls, model: Thing) -> Thing:
         model.name = None
         model.age = None
         model.email = None

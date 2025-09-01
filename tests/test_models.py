@@ -1,11 +1,15 @@
+from typing import TYPE_CHECKING
+
 import pytest
 
-from post_fetch_hook.typing import Any
-from tests.myapp.models import Object, Parent, Thing
+from example_project.myapp.models import Object, Parent, Thing
+
+if TYPE_CHECKING:
+    from post_fetch_hook.typing import Any
 
 
 @pytest.mark.django_db
-def test_post_fetch_hook():
+def test_post_fetch_hook() -> None:
     t0 = Thing(name="foo", age=12, email="foo@bar.com")
 
     assert t0.name == "foo"
@@ -22,7 +26,7 @@ def test_post_fetch_hook():
 
 
 @pytest.mark.django_db
-def test_post_fetch_values_hook():
+def test_post_fetch_values_hook() -> None:
     t0 = Thing(name="foo", age=12, email="foo@bar.com")
 
     assert t0.name == "foo"
@@ -38,7 +42,7 @@ def test_post_fetch_values_hook():
 
 
 @pytest.mark.django_db
-def test_post_fetch_values_list_hook():
+def test_post_fetch_values_list_hook() -> None:
     t0 = Thing(name="foo", age=12, email="foo@bar.com")
 
     assert t0.name == "foo"
@@ -54,7 +58,7 @@ def test_post_fetch_values_list_hook():
 
 
 @pytest.mark.django_db
-def test_post_fetch_values_list_flat_hook():
+def test_post_fetch_values_list_flat_hook() -> None:
     t0 = Thing(name="foo", age=12, email="foo@bar.com")
 
     assert t0.name == "foo"
@@ -69,7 +73,7 @@ def test_post_fetch_values_list_flat_hook():
 
 
 @pytest.mark.django_db
-def test_post_fetch_hook__get():
+def test_post_fetch_hook__get() -> None:
     Thing(name="foo", age=12, email="foo@bar.com").save()
 
     t1: Thing = Thing.objects.get(name="foo")
@@ -80,7 +84,7 @@ def test_post_fetch_hook__get():
 
 
 @pytest.mark.django_db
-def test_post_fetch_hook__first():
+def test_post_fetch_hook__first() -> None:
     Thing(name="foo", age=12, email="foo@bar.com").save()
 
     t1: Thing = Thing.objects.first()
@@ -91,7 +95,7 @@ def test_post_fetch_hook__first():
 
 
 @pytest.mark.django_db
-def test_post_fetch_hook__last():
+def test_post_fetch_hook__last() -> None:
     Thing(name="foo", age=12, email="foo@bar.com").save()
 
     t1: Thing = Thing.objects.last()
@@ -102,7 +106,7 @@ def test_post_fetch_hook__last():
 
 
 @pytest.mark.django_db
-def test_post_fetch_hook__iter():
+def test_post_fetch_hook__iter() -> None:
     Thing(name="foo", age=12, email="foo@bar.com").save()
 
     t1: list[Thing] = list(Thing.objects.all())
@@ -113,7 +117,7 @@ def test_post_fetch_hook__iter():
 
 
 @pytest.mark.django_db
-def test_post_fetch_hook__select_related():
+def test_post_fetch_hook__select_related() -> None:
     thing = Thing(name="foo", age=12, email="foo@bar.com")
     thing.save()
 
@@ -129,7 +133,7 @@ def test_post_fetch_hook__select_related():
 
 
 @pytest.mark.django_db
-def test_post_fetch_hook__select_related__all():
+def test_post_fetch_hook__select_related__all() -> None:
     thing = Thing(name="foo", age=12, email="foo@bar.com")
     thing.save()
 
@@ -151,7 +155,7 @@ def test_post_fetch_hook__select_related__all():
 
 
 @pytest.mark.django_db
-def test_post_fetch_hook__select_related__multiple():
+def test_post_fetch_hook__select_related__multiple() -> None:
     thing = Thing(name="foo", age=12, email="foo@bar.com")
     thing.save()
 
@@ -171,7 +175,7 @@ def test_post_fetch_hook__select_related__multiple():
 
 
 @pytest.mark.django_db
-def test_post_fetch_hook__select_related__null_relation():
+def test_post_fetch_hook__select_related__null_relation() -> None:
     parent = Parent(obj=None, title="bar")
     parent.save()
 
@@ -182,7 +186,7 @@ def test_post_fetch_hook__select_related__null_relation():
 
 
 @pytest.mark.django_db
-def test_post_fetch_hook__prefetch_related():
+def test_post_fetch_hook__prefetch_related() -> None:
     thing = Thing(name="foo", age=12, email="foo@bar.com")
     thing.save()
 
@@ -194,11 +198,11 @@ def test_post_fetch_hook__prefetch_related():
     assert t1.name is None
     assert t1.age is None
     assert t1.email is None
-    assert list(t1.objs.all())[0].identifier is None
+    assert next(iter(t1.objs.all())).identifier is None
 
 
 @pytest.mark.django_db
-def test_post_fetch_hook__prefetch_related__multiple():
+def test_post_fetch_hook__prefetch_related__multiple() -> None:
     thing = Thing(name="foo", age=12, email="foo@bar.com")
     thing.save()
 
@@ -214,15 +218,15 @@ def test_post_fetch_hook__prefetch_related__multiple():
     assert t1.age is None
     assert t1.email is None
 
-    o1 = list(t1.objs.all())[0]
+    o1 = next(iter(t1.objs.all()))
     assert o1.identifier is None
 
-    p1 = list(o1.parents.all())[0]
+    p1 = next(iter(o1.parents.all()))
     assert p1.title is None
 
 
 @pytest.mark.django_db
-def test_post_fetch_hook__mix_of_select_and_prefetch_related():
+def test_post_fetch_hook__mix_of_select_and_prefetch_related() -> None:
     thing = Thing(name="foo", age=12, email="foo@bar.com")
     thing.save()
 
@@ -242,5 +246,5 @@ def test_post_fetch_hook__mix_of_select_and_prefetch_related():
     assert t1.age is None
     assert t1.email is None
 
-    p1 = list(o1.parents.all())[0]
+    p1 = next(iter(o1.parents.all()))
     assert p1.title is None

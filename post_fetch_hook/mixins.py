@@ -1,13 +1,15 @@
+from __future__ import annotations
+
 from typing import TYPE_CHECKING
 
 from django.db.models import Model
-from django.db.models.query import BaseIterable
-from django.db.models.sql import Query
-
-from .typing import Any, Callable
 
 if TYPE_CHECKING:
+    from django.db.models.query import BaseIterable
+    from django.db.models.sql import Query
+
     from .models import PostFetchModel
+    from .typing import Any, Callable
 
 __all__ = [
     "PostFetchModelMixin",
@@ -43,7 +45,7 @@ class PostFetchModelMixin:
 class PostFetchQuerySetMixin:
     """Patches QuerySet so that results can be modified right after they are fetched but before they are cached."""
 
-    model: type["PostFetchModel"]
+    model: type[PostFetchModel]
     query: Query
     _result_cache: list[Any] | None
     _prefetch_related_lookups: dict[str, Any]
@@ -64,7 +66,7 @@ class PostFetchQuerySetMixin:
         if isinstance(self.query.select_related, dict):
             select_related = self.query.select_related
         elif self.query.select_related is True:
-            select_related = {field.name: {} for field in self.model._meta.fields if field.is_relation}
+            select_related = {field.name: {} for field in self.model._meta.fields if field.is_relation}  # noqa: SLF001
         return select_related
 
     def _post_fetch(self, rows: list[Any], select_related: NestedDict) -> list[Any]:  # noqa: C901, PLR0912

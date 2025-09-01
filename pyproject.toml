@@ -22,16 +22,17 @@ classifiers = [
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3 :: Only",
-    "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
-    "Framework :: Django :: 4.2",
     "Framework :: Django :: 5.0",
     "Framework :: Django :: 5.1",
+    "Framework :: Django :: 5.2",
 ]
-requires-python = ">=3.10,<4"
-dynamic = ["dependencies"]
+requires-python = ">=3.11,<4"
+dynamic = [
+    "dependencies",
+]
 
 [project.urls]
 "Homepage" = "https://mrthearman.github.io/django-post-fetch-hook"
@@ -46,32 +47,43 @@ packages = [
 ]
 
 [tool.poetry.dependencies]
-Django = ">=4.2"
+Django = ">=5.0"
 
 [tool.poetry.group.test.dependencies]
 pytest = "8.4.1"
-coverage = "7.10.2"
 pytest-django = "4.11.1"
-tox = "4.28.4"
-tox-gh-actions = "3.3.0"
+coverage = "7.10.6"
+nox = "2025.5.1"
 
 [tool.poetry.group.docs.dependencies]
 mkdocs = "1.6.1"
 pymdown-extensions = "10.16.1"
-mkdocs-mermaid2-plugin = "1.2.1"
+pygments = "2.19.2"
+mkdocs-mermaid2-plugin = "1.2.2"
 
 [tool.poetry.group.lint.dependencies]
-pre-commit = "4.2.0"
+pre-commit = "4.3.0"
+mypy = "1.17.1"
+django-stubs = "5.2.2"
 
 [tool.ruff]
 fix = true
+unsafe-fixes = true
 line-length = 120
 extend-exclude = [
     "tests/*",
 ]
+
+[tool.ruff.format]
+docstring-code-format = true
+preview = true
+
+[tool.ruff.lint]
 typing-modules = [
     "post_fetch_hook.typing",
 ]
+preview = true
+explicit-preview-rules = true
 select = [
     "A",        # flake8-builtins
     "ANN",      # flake8-annotations
@@ -86,41 +98,128 @@ select = [
     "D202",     # pydocstyle: No blank lines allowed after function docstring (found {num_lines})
     "D209",     # pydocstyle: Multi-line docstring closing quotes should be on a separate line
     "D213",     # pydocstyle: Multi-line docstring summary should start at the second line
+    "DJ",       # flake8-django
     "DTZ",      # flake8-datetimez
     "E",        # pycodestyle errors
     "EM",       # flake8-errmsg
     "F",        # pyflakes
+    "FA",       # flake8-future-annotations
     "FBT",      # flake8-boolean-trap
+    "FLY",      # flynt
+    "FURB",     # refurb
+    "G",        # flake8-logging-format
     "I",        # isort
+    "ICN",      # flake8-import-conventions
     "INP",      # flake8-no-pep420
+    "INT",      # flake8-gettext
     "ISC",      # flake8-implicit-str-concat
+    "LOG",      # flake8-logging
     "N",        # pep8-naming
     "PERF",     # perflint
     "PGH",      # pygrep-hooks
     "PIE",      # flake8-pie
     "PL",       # pylint
+    "PLC",      # pylint convention
+    "PLE",      # pylint error
+    "PLR",      # pylint refactor
+    "PLW",      # pylint warning
     "PT",       # flake8-pytest-style
     "PTH",      # flake8-use-pathlib
     "PYI",      # flake8-pyi
     "Q",        # flake8-quotes
+    "R",        # Refactor
     "RET",      # flake8-return
     "RSE",      # flake8-raise
     "RUF",      # ruff-specific rules
     "S",        # flake8-bandit
     "SIM",      # flake8-simplify
+    "SLF",      # flake8-self
     "T20",      # flake8-print
     "TCH",      # flake8-type-checking
+    "TID",      # flake8-tidy-imports
     "TRY",      # tryceratops
     "UP",       # pyupgrade
     "W",        # pycodestyle warnings
 ]
+# Preview rules
+extend-select = [
+    "B901",     # return-in-generator
+    "B903",     # class-as-data-structure
+    "B909",     # loop-iterator-mutation
+    #
+    "FURB101",  # read-whole-file
+    "FURB103",  # write-whole-file
+    "FURB110",  # if-exp-instead-of-or-operator
+    "FURB113",  # repeated-append
+    "FURB116",  # f-string-number-format
+    "FURB118",  # reimplemented-operator
+    "FURB122",	# for-loop-writes
+    "FURB131",  # delete-full-slice
+    "FURB132",  # check-and-remove-from-set
+    "FURB140",  # reimplemented-starmap
+    "FURB142",  # for-loop-set-mutations
+    "FURB145",  # slice-copy
+    "FURB148",  # unnecessary-enumerate
+    "FURB152",  # math-constant
+    "FURB154",  # repeated-global
+    "FURB156",	# hardcoded-string-charset
+    "FURB157",  # verbose-decimal-constructor
+    "FURB162",	# fromisoformat-replace-z
+    "FURB164",  # unnecessary-from-float
+    "FURB166",  # int-on-sliced-str
+    "FURB171",  # single-item-membership-test
+    "FURB180",  # meta-class-abc-meta
+    "FURB189",  # subclass-builtin
+    "FURB192",  # sorted-min-max
+    #
+    "LOG004",   # log-exception-outside-except-handler
+    "LOG014",   # exc-info-outside-except-handler
+    #
+    "PLC1901",  # compare-to-empty-string
+    "PLC0206",  # dict-index-missing-items
+    "PLC0415",  # import-outside-top-level
+    "PLC2701",  # import-private-name
+    "PLC2801",  # unnecessary-dunder-call
+    #
+    "PLE0304",  # invalid-bool-return-type
+    "PLE1141",  # dict-iter-missing-items
+    "PLE4703",  # modified-iterating-set
+    #
+    "PLR0202",  # no-classmethod-decorator
+    "PLR0203",  # no-staticmethod-decorator
+    "PLR0904",  # too-many-public-methods
+    "PLR0914",  # too-many-local-variables
+    "PLR0916",  # too-many-boolean-expressions
+    "PLR0917",  # too-many-positional-arguments
+    "PLR1702",  # too-many-nested-blocks
+    "PLR1733",  # unnecessary-dict-index-lookup
+    "PLR6104",  # non-augmented-assignment
+    "PLR6201",  # literal-membership
+    #
+    "PLW0108",  # unnecessary-lambda
+    "PLW0177",  # nan-comparison
+    "PLW0244",	# redefined-slots-in-subclass
+    "PLW1514",  # unspecified-encoding
+    "PLW1641",  # eq-without-hash
+    #
+    "RUF028",   # invalid-formatter-suppression-comment
+    "RUF029",   # unused-async
+    "RUF055",   # unnecessary-regular-expression
+    "RUF056",   # falsy-dict-get-fallback
+    "RUF057", 	# unnecessary-round
+    "RUF059",   # unused-unpacked-variable
+    #
+    "UP042",    # replace-str-enum
+    "UP045", 	# non-pep604-annotation-optional
+]
 ignore = [
     "A005",     # Can shadow builtin modules.
-    "ANN101",   # Missing type annotation for `self` in method
-    "ANN102",   # Missing type annotation for `cls` in classmethod
     "ARG003",   # Missing type annotation for `cls` in classmethod
     "ANN401",   # Any is allowed
     "S311",     # random-module is OK.
+    "RUF012",   # No need for ClassVar
+    "DJ001",    # Accept null=True on charfields
+    "G004",     # Logging statement uses f-string
     #
     # Conflicting with ruff-format
     #
@@ -140,19 +239,50 @@ ignore = [
     "W191",     # tab-indentation
 ]
 
-[tool.django-stubs]
-django_settings_module = "tests.project.settings"
+[tool.ruff.lint.isort]
+combine-as-imports = false
+split-on-trailing-comma = false
+required-imports = [
+    "from __future__ import annotations",
+]
+known-third-party = [
+    "django",
+]
+known-first-party = [
+    "post_fetch_hook",
+]
+section-order = [
+    "future",
+    "standard-library",
+    "third-party",
+    "first-party",
+    "local-folder",
+]
+
+[tool.ruff.lint.flake8-annotations]
+suppress-dummy-args = true
+
+[tool.ruff.lint.flake8-type-checking]
+strict = true
+quote-annotations = false
+
+[tool.ruff.lint.flake8-unused-arguments]
+ignore-variadic-names = true
+
+[tool.ruff.lint.mccabe]
+max-complexity = 12
+
+[tool.ruff.lint.pylint]
+max-returns = 8
+max-positional-args = 5
+max-args = 10
+max-bool-expr = 6
 
 [tool.coverage.run]
 relative_files = true
+branch = true
 
 [tool.coverage.report]
-omit = [
-    "tests/*",
-    "docs/*",
-    ".venv/*",
-    ".tox/*",
-]
 exclude_lines = [
     "if TYPE_CHECKING:",
     "except ImportError:",
@@ -161,39 +291,17 @@ exclude_lines = [
 ]
 
 [tool.pytest.ini_options]
-addopts = "-vv -s --log-cli-level=INFO --disable-warnings"
+DJANGO_SETTINGS_MODULE = "example_project.project.settings"
+addopts = "--disable-warnings"
 
-[tool.tox]
-legacy_tox_ini = """
-[tox]
-envlist = py{310, 311, 312, 313}-django{42, 50, 51}
-isolated_build = true
+[tool.mypy]
+plugins = [
+    "mypy_django_plugin.main",
+]
 
-[gh-actions]
-python =
-    3.10: py310
-    3.11: py311
-    3.12: py312
-    3.13: py313
-
-[testenv]
-allowlist_externals =
-    poetry
-setenv =
-    PYTHONPATH = {toxinidir}
-    DJANGO_SETTINGS_MODULE = tests.project.settings
-deps =
-    django42: Django >=4.2,<4.3
-    django50: Django >=5.0,<5.1
-    django51: Django >=5.1,<5.2
-
-    pytest
-    coverage
-    pytest-django
-commands =
-    coverage run -m pytest -vv -s --log-cli-level=INFO
-"""
+[tool.django-stubs]
+django_settings_module = "example_project.project.settings"
 
 [build-system]
-requires = ["poetry-core>=1.9.0"]
+requires = ["poetry-core>=2.0.0"]
 build-backend = "poetry.core.masonry.api"
