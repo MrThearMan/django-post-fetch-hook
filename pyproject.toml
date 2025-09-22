@@ -52,7 +52,7 @@ Django = ">=5.0"
 [tool.poetry.group.test.dependencies]
 pytest = "8.4.2"
 pytest-django = "4.11.1"
-coverage = "7.10.6"
+coverage = "7.10.7"
 nox = "2025.5.1"
 
 [tool.poetry.group.docs.dependencies]
@@ -63,7 +63,7 @@ mkdocs-mermaid2-plugin = "1.2.2"
 
 [tool.poetry.group.lint.dependencies]
 pre-commit = "4.3.0"
-mypy = "1.18.1"
+mypy = "1.18.2"
 django-stubs = "5.2.5"
 
 [tool.ruff]
