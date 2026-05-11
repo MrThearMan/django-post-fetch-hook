@@ -49,12 +49,12 @@ packages = [
 ]
 
 [tool.poetry.dependencies]
-Django = ">=5.2.13"
+Django = ">=5.2.14"
 
 [tool.poetry.group.test.dependencies]
 pytest = "9.0.3"
 pytest-django = "4.12.0"
-coverage = "7.13.5"
+coverage = "7.14.0"
 nox = "2026.4.10"
 
 [tool.poetry.group.docs.dependencies]
@@ -65,8 +65,8 @@ mkdocs-mermaid2-plugin = "1.2.3"
 
 [tool.poetry.group.lint.dependencies]
 pre-commit = "4.6.0"
-mypy = "1.20.2"
-django-stubs = "6.0.3"
+mypy = "2.0.0"
+django-stubs = "6.0.4"
 
 [tool.ruff]
 fix = true
