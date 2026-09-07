@@ -25,8 +25,8 @@ If you're interested, here is what you would implement the hooks on your models:
 from typing import Any
 from post_fetch_hook.models import PostFetchModel
 
-class MyModel(PostFetchModel):
 
+class MyModel(PostFetchModel):
     # You can implement any of these methods.
     # These are their default configurations.
 
