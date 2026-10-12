@@ -465,14 +465,14 @@ files = [
 
 [[package]]
 name = "django"
-version = "5.2.17"
+version = "5.2.18"
 description = "A high-level Python web framework that encourages rapid development and clean, pragmatic design."
 optional = false
 python-versions = ">=3.10"
 groups = ["main", "lint"]
 files = [
-    {file = "django-5.2.17-py3-none-any.whl", hash = "sha256:f04fb3b36ee119e1af4fa1d397d5fd6cf12700f49321e84d4f4c642c5b1973db"},
-    {file = "django-5.2.17.tar.gz", hash = "sha256:9d4d93be539a18ab80d058eb515900e10951e04c537c5a6b394fc49528d3251f"},
+    {file = "django-5.2.18-py3-none-any.whl", hash = "sha256:92ed81d500be6408ecd704d7bd1366c534f30427bffcc63c5fefb129561aec7c"},
+    {file = "django-5.2.18.tar.gz", hash = "sha256:461c5dd06d2ea16bd5ca37d3f46e4def1d6b0fe7588c6f4e2119517bb0af8b2d"},
 ]
 
 [package.dependencies]
@@ -486,14 +486,14 @@ bcrypt = ["bcrypt"]
 
 [[package]]
 name = "django-stubs"
-version = "6.1.1"
+version = "6.1.2"
 description = "Mypy stubs for Django"
 optional = false
 python-versions = ">=3.11"
 groups = ["lint"]
 files = [
-    {file = "django_stubs-6.1.1-py3-none-any.whl", hash = "sha256:a913d0c35242cd820f638486118fd542d687b6a85104bea9cb7e635b52b889e3"},
-    {file = "django_stubs-6.1.1.tar.gz", hash = "sha256:291fd79197416d191ec9f4e443bc6800b64dd5d41e476b91e679495d005f3d61"},
+    {file = "django_stubs-6.1.2-py3-none-any.whl", hash = "sha256:ffb6e74f54b8c1f9b2f3bc4852c5abbaa2324b2a7cb1c51854c5f95abe67165c"},
+    {file = "django_stubs-6.1.2.tar.gz", hash = "sha256:d62b15fa5cbae79b1922d015e1454d299959d230221dadb23f65c749480b97ec"},
 ]
 
 [package.dependencies]
@@ -503,7 +503,7 @@ types-pyyaml = "*"
 typing-extensions = ">=4.11.0"
 
 [package.extras]
-compatible-mypy = ["mypy (>=1.13,<2.4)"]
+compatible-mypy = ["mypy (>=1.13,<2.5)"]
 oracle = ["oracledb"]
 redis = ["redis", "types-redis"]
 
@@ -1578,4 +1578,4 @@ watchmedo = ["PyYAML (>=3.10)"]
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.11,<4"
-content-hash = "a21d4f531c81b2916c5583b2a55552ed380e7ddb64ae32379c5bacef549f432b"
+content-hash = "066a0acefe0da1b4c0de373605444ab771672d852fcbb8f6205e7a10c8a02c09"
